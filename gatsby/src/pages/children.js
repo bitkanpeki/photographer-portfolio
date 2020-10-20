@@ -1,10 +1,10 @@
 import React from 'react'
 import Layout from '../components/Layout'
 
-const HomePage = () => (
+const childrenPage = () => (
   <Layout>
-    <p>Home page</p>
+    <p>Children page</p>
   </Layout>
 )
 
-export default HomePage
+export default childrenPage

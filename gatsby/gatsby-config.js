@@ -1,10 +1,20 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/gatsby-config/
- */
+import dotenv from 'dotenv'
 
-module.exports = {
-  /* Your site config here */
-  plugins: [],
+dotenv.config({ path: '.env' })
+
+export default {
+  plugins: [
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-styled-components',
+    {
+      resolve: 'gatsby-source-sanity',
+      options: {
+        projectId: '9zkjdbny',
+        dataset: 'production',
+        token: process.env.SANITY_TOKEN,
+        watchMode: true,
+        overlayDrafts: true,
+      },
+    },
+  ],
 }
