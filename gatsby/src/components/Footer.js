@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Footer = () => (
   <footer>
     <p>&copy; Photographer Portfolio</p>

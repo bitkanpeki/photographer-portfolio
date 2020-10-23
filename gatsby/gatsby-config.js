@@ -1,8 +1,9 @@
-import dotenv from 'dotenv'
+/* eslint-disable */
+require('dotenv').config({
+  path: `.env`,
+})
 
-dotenv.config({ path: '.env' })
-
-export default {
+module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',

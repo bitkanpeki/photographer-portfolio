@@ -1,10 +1,13 @@
-import React from 'react'
-import Layout from '../components/Layout'
+import styled from 'styled-components'
+
+const StyledText = styled.p`
+  color: red;
+`
 
 const HomePage = () => (
-  <Layout>
-    <p>Home page</p>
-  </Layout>
+  <>
+    <StyledText>Home page</StyledText>
+  </>
 )
 
 export default HomePage
