@@ -3,10 +3,39 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyles = createGlobalStyle`
     :root {
         --white: #fff,
+        --black: #000,
+        
+        // Standard sizes for spaces
+        --spaceSmall: 0.25rem,
+        --spaceMedium: 0.5rem,
+        --spaceLarge: 1rem,
+        --spaceXLarge: 2rem,
+        --spaceXXLarge: 4rem,
+    }
+
+    *,
+    *:before,
+    *:after {
+    box-sizing: inherit;
     }
 
     html {
-        font-size: 10px;
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    button:active,
+    button:focus {
+        outline: none;
     }
 `
 export default GlobalStyles

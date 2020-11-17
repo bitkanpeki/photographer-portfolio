@@ -1,13 +1,37 @@
-import styled from 'styled-components'
+import { graphql } from 'gatsby'
+import PortraitsList from '../components/PortraitsList'
 
-const StyledText = styled.p`
-  color: red;
-`
+const HomePage = ({ data }) => {
+  const portraits = data.portraits.nodes
 
-const HomePage = () => (
-  <>
-    <StyledText>Home page</StyledText>
-  </>
-)
+  console.log(portraits)
+  return (
+    <>
+      <PortraitsList portraits={portraits} />
+    </>
+  )
+}
 
 export default HomePage
+
+export const query = graphql`
+  query PortraitsQuery {
+    portraits: allSanityPortraits {
+      nodes {
+        _id
+        _createdAt
+        name
+        slug {
+          current
+        }
+        image {
+          asset {
+            fluid(maxWidth: 1000) {
+              ...GatsbySanityImageFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`

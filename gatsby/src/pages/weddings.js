@@ -1,6 +1,6 @@
 const weddingsPage = () => (
   <>
-    <p>Weddings page</p>
+    <h1>Weddings page</h1>
   </>
 )
 
