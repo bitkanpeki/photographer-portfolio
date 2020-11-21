@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 
@@ -9,10 +9,10 @@ const Container = styled.nav`
   grid-template-columns: 1fr fit-content(100px);
 `
 const Name = styled.h1`
-  font-size: 2.5rem;
+  font-size: 3rem;
   text-transform: uppercase;
   white-space: nowrap;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 `
 
 const List = styled.ul`
@@ -145,7 +145,7 @@ const Nav = () => {
   return (
     <Container>
       <Name>
-        <Link to="/">Akiko Fanning</Link>
+        <Link to="/">Akiko</Link>
       </Name>
       <List>
         <li>

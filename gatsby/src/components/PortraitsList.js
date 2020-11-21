@@ -1,8 +1,9 @@
+import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import styled from 'styled-components'
 
-const PortraitsGrid = styled.div`
-  margin-top: 10rem;
+const Gallery = styled.div`
+  margin-top: 5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -13,11 +14,11 @@ const PortraitsGrid = styled.div`
   }
 `
 
-const ImgStyled = styled(Img)`
+const Container = styled.div`
   width: ${({ aspectRatio }) => 400 * aspectRatio}px;
   flex-grow: ${({ aspectRatio }) => 400 * aspectRatio};
 
-  & :hover:after {
+  .gatsby-image-wrapper:hover:after {
     content: '';
     position: absolute;
     top: 0;
@@ -28,23 +29,20 @@ const ImgStyled = styled(Img)`
   }
 `
 
-const PortraitsList = ({ portraits }) => {
-  const sortedPortraits = portraits
-    .slice()
-    .sort((a, b) => new Date(b._createdAt) - new Date(a._createdAt))
+const SinglePortrait = ({ portrait }) => (
+  <Container aspectRatio={portrait.image.asset.fluid.aspectRatio}>
+    <Link to={`/portraits/${portrait.slug.current}`}>
+      <Img fluid={portrait.image.asset.fluid} alt={portrait.name} />
+    </Link>
+  </Container>
+)
 
-  return (
-    <PortraitsGrid>
-      {sortedPortraits.map((portrait) => (
-        <ImgStyled
-          key={portrait._id}
-          fluid={portrait.image.asset.fluid}
-          alt={portrait.name}
-          aspectRatio={portrait.image.asset.fluid.aspectRatio}
-        />
-      ))}
-    </PortraitsGrid>
-  )
-}
+const PortraitsList = ({ portraits }) => (
+  <Gallery>
+    {portraits.map((portrait) => (
+      <SinglePortrait key={portrait.slug.current} portrait={portrait} />
+    ))}
+  </Gallery>
+)
 
 export default PortraitsList

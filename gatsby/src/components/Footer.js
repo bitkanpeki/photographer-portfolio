@@ -1,7 +1,14 @@
-const Footer = () => (
-  <footer>
+import styled from 'styled-components'
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
+`
+
+const FooterComponent = () => (
+  <Footer>
     <p>&copy; Photographer Portfolio</p>
-  </footer>
+  </Footer>
 )
 
-export default Footer
+export default FooterComponent

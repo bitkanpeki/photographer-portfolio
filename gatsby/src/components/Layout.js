@@ -3,7 +3,7 @@ import 'normalize.css'
 import GlobalStyles from '../styles/GlobalStyles'
 import Typography from '../styles/Typography'
 import Nav from './Nav'
-import Footer from './Footer'
+import FooterComponent from './Footer'
 
 const Container = styled.div`
   padding: 7rem;
@@ -19,7 +19,7 @@ const Layout = ({ children }) => (
     <Container>
       <Nav />
       {children}
-      <Footer />
+      <FooterComponent />
     </Container>
   </>
 )
