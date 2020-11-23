@@ -1,13 +1,14 @@
 import { graphql } from 'gatsby'
+import Layout from '../components/Layout'
 import PortraitsList from '../components/PortraitsList'
 
 const HomePage = ({ data }) => {
   const portraits = data.portraits.nodes
 
   return (
-    <>
+    <Layout>
       <PortraitsList portraits={portraits} />
-    </>
+    </Layout>
   )
 }
 

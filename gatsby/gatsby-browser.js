@@ -1,5 +1,5 @@
-import Layout from './src/components/Layout'
+import Global from './src/components/Global'
 
 export function wrapPageElement({ element, props }) {
-  return <Layout {...props}>{element}</Layout>
+  return <Global {...props}>{element}</Global>
 }

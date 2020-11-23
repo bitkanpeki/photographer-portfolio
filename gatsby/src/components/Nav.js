@@ -3,16 +3,15 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 
 const Container = styled.nav`
-  width: 100%;
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr fit-content(100px);
+  padding-top: 7rem;
+  display: flex;
+  justify-content: space-between;
 `
 const Name = styled.h1`
   font-size: 3rem;
   text-transform: uppercase;
   white-space: nowrap;
-  letter-spacing: 2px;
+  letter-spacing: 5px;
 `
 
 const List = styled.ul`
@@ -128,6 +127,7 @@ const MobileList = styled.ul`
   ${({ menuOpen }) => menuOpen && `transform: translateX(-100%);`}
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 300ms cubic-bezier(0.4, 0, 1, 1) 0s;
   overflow-y: auto;
+  z-index: 1;
 
   li {
     margin-bottom: 4rem;
