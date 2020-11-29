@@ -1,13 +1,15 @@
 import styled from 'styled-components'
+import { Container } from '../styles/Reusable'
 
 const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
+  background-color: #171717;
+  color: rgba(243, 241, 241, 0.8);
+  padding: 2rem;
 `
 
 const FooterComponent = () => (
   <Footer>
-    <p>&copy; Photographer Portfolio</p>
+    <Container>Photographer Portfolio</Container>
   </Footer>
 )
 

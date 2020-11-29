@@ -1,18 +1,15 @@
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import styled from 'styled-components'
-import { device } from '../styles/breakpoints'
+import { device } from '../styles/Breakpoints'
 
 const Gallery = styled.div`
   margin-top: 5rem;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 
   @media ${device.small} {
-    display: flex;
-    flex-wrap: wrap;
-
     &::after {
       content: '';
       flex-grow: 999999999;

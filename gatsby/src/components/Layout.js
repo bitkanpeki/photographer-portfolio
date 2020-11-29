@@ -1,12 +1,23 @@
+import styled from 'styled-components'
 import Nav from './Nav'
-import FooterComponent from './Footer'
+import Footer from './Footer'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`
+
+const Content = styled.div`
+  flex: 1 0 auto;
+`
 
 const Layout = ({ children }) => (
-  <>
+  <Container>
     <Nav />
-    {children}
-    <FooterComponent />
-  </>
+    <Content>{children}</Content>
+    <Footer />
+  </Container>
 )
 
 export default Layout

@@ -9,23 +9,9 @@ const Container = styled.div`
   align-items: center;
 `
 
-const Header = styled.header`
-  width: 100%;
-  margin-top: 7rem;
-  display: flex;
-  justify-content: space-between;
-`
-
-const Name = styled.h1`
-  font-size: 3rem;
-  text-transform: uppercase;
-  white-space: nowrap;
-  letter-spacing: 5px;
-`
-
 const BackBtn = styled(Link)`
   font-size: 3.5rem;
-  padding: 2rem;
+  padding: 0.5rem;
   font-weight: 800;
 `
 
@@ -46,14 +32,9 @@ export default function SinglePortraitPage({
 }) {
   return (
     <Container>
-      <Header>
-        <Name>
-          <Link to="/">Akiko</Link>
-        </Name>
-        <BackBtn to="/">
-          <BiX />
-        </BackBtn>
-      </Header>
+      <BackBtn to="/">
+        <BiX />
+      </BackBtn>
 
       <ContainerImg aspectRatio={portrait.image.asset.fluid.aspectRatio}>
         <Link to={`/portraits/${pageContext.next.slug.current}`}>

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import { useOnClickOutside } from '../utils/hooks'
 
 const Container = styled.nav`
   padding-top: 7rem;
@@ -61,6 +62,9 @@ const Burger = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
+  height: 4rem;
+  padding: 0 0.8rem;
 
   div {
     width: 20px;
@@ -91,17 +95,18 @@ const Burger = styled.div`
   }
 `
 
-// const Overlay = styled.div`
-//   opacity: ${({ menuOpen }) => (menuOpen ? '0.7' : '0')};
-//   visibility: ${({ menuOpen }) => (menuOpen ? 'visible' : 'hidden')};
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   transition: all 300ms;
-//   background-color: black;
-// `
+const Overlay = styled.div`
+  opacity: ${({ menuOpen }) => (menuOpen ? '0.7' : '0')};
+  visibility: ${({ menuOpen }) => (menuOpen ? 'visible' : 'hidden')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: all 250ms;
+  background-color: black;
+  z-index: 1;
+`
 
 const MobileList = styled.ul`
   display: flex;
@@ -116,18 +121,18 @@ const MobileList = styled.ul`
   list-style: none;
   background: white;
   font-size: 1.8rem;
-  width: 350px;
+  width: 28rem;
+  max-width: 75%;
   overflow: hidden;
   position: fixed;
   height: 100vh;
   top: 0;
   left: 100%;
-  width: 100%;
   opacity: ${({ menuOpen }) => (menuOpen ? `1` : `0`)};
   ${({ menuOpen }) => menuOpen && `transform: translateX(-100%);`}
-  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 300ms cubic-bezier(0.4, 0, 1, 1) 0s;
+  transition: transform 250ms cubic-bezier(0,0,.38,.9) 0s, opacity 250ms linear;
   overflow-y: auto;
-  z-index: 1;
+  z-index: 2;
 
   li {
     margin-bottom: 4rem;
@@ -139,6 +144,25 @@ const MobileList = styled.ul`
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const refMobileMenu = useRef()
+
+  const refBurgerButton = useRef()
+
+  const refs = [refMobileMenu, refBurgerButton]
+
+  useOnClickOutside(refs, () => setMenuOpen(false))
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+      // document.body.style.paddingRight = '15px'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+      // document.body.style.paddingRight = '0px'
+    }
+  }, [menuOpen])
 
   const closeMobileMenu = () => setMenuOpen(false)
 
@@ -170,13 +194,19 @@ const Nav = () => {
         </li>
       </List>
 
-      <Burger menuOpen={menuOpen} onClick={() => setMenuOpen((prev) => !prev)}>
+      <Burger
+        menuOpen={menuOpen}
+        onClick={() => setMenuOpen((prev) => !prev)}
+        ref={refBurgerButton}
+      >
         <div />
         <div />
         <div />
       </Burger>
 
-      <MobileList menuOpen={menuOpen}>
+      <Overlay menuOpen={menuOpen} />
+
+      <MobileList menuOpen={menuOpen} ref={refMobileMenu}>
         <li>
           <Link to="/" onClick={closeMobileMenu}>
             Portraits
