@@ -4,15 +4,20 @@ import styled from 'styled-components'
 import { BiX } from 'react-icons/bi'
 
 const Container = styled.div`
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `
 
-const BackBtn = styled(Link)`
-  font-size: 3.5rem;
-  padding: 0.5rem;
-  font-weight: 800;
+const IconStyled = styled(BiX)`
+  position: absolute;
+  top: 2vh;
+  right: 2vh;
+  z-index: 1001;
+  color: #ccc;
+  font-size: 32px;
+  cursor: pointer;
 `
 
 const ContainerLink = styled.div`
@@ -22,30 +27,34 @@ const ContainerLink = styled.div`
 `
 
 const ContainerImg = styled.div`
-  width: ${({ aspectRatio }) => 600 * aspectRatio}px;
+  height: 96vh;
+  width: ${({ aspectRatio }) => 96 * aspectRatio}vh;
+  //max-height: 90vw;
+  max-width: 90vw;
   cursor: default;
 `
 
-export default function SinglePortraitPage({
-  data: { portrait },
-  pageContext,
-}) {
+export default ({ data, pageContext }) => {
+  const sources = [
+    { ...data.mobileImage.image.asset.fluid, media: `(max-width: 767px)` },
+    {
+      ...data.desktopImage.image.asset.fluid,
+      media: `(min-width: 768px)`,
+    },
+  ]
+
   return (
     <Container>
-      <BackBtn to="/">
-        <BiX />
-      </BackBtn>
-
-      <ContainerImg aspectRatio={portrait.image.asset.fluid.aspectRatio}>
+      <IconStyled to="/" />
+      <ContainerImg
+        aspectRatio={data.mobileImage.image.asset.fluid.aspectRatio}
+      >
         <Link to={`/portraits/${pageContext.next.slug.current}`}>
-          <Img
-            imgStyle={{ cursor: 'default' }}
-            fluid={portrait.image.asset.fluid}
-          />
+          <Img imgStyle={{ cursor: 'default' }} fluid={sources} />
         </Link>
       </ContainerImg>
 
-      <ContainerLink>
+      {/* <ContainerLink>
         <Link to={`/portraits/${pageContext.prev.slug.current}`}>Prev</Link>
         <Link
           to={`/portraits/${pageContext.next.slug.current}`}
@@ -53,19 +62,30 @@ export default function SinglePortraitPage({
         >
           Next
         </Link>
-      </ContainerLink>
+      </ContainerLink> */}
     </Container>
   )
 }
 
 export const query = graphql`
   query($slug: String!) {
-    portrait: sanityPortraits(slug: { current: { eq: $slug } }) {
+    mobileImage: sanityPortraits(slug: { current: { eq: $slug } }) {
       name
       id
       image {
         asset {
-          fluid(maxWidth: 1200) {
+          fluid(maxWidth: 800) {
+            ...GatsbySanityImageFluid
+          }
+        }
+      }
+    }
+    desktopImage: sanityPortraits(slug: { current: { eq: $slug } }) {
+      name
+      id
+      image {
+        asset {
+          fluid(maxWidth: 1500) {
             ...GatsbySanityImageFluid
           }
         }
