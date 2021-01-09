@@ -10,6 +10,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   flex: 1 0 auto;
+  margin: 0 7rem;
 `
 
 const Layout = ({ children }) => (

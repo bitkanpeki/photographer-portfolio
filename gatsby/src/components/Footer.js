@@ -5,6 +5,7 @@ const Footer = styled.footer`
   background-color: #171717;
   color: rgba(243, 241, 241, 0.8);
   padding: 2rem;
+  margin-top: 5rem;
 `
 
 const FooterComponent = () => (

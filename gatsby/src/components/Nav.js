@@ -4,9 +4,12 @@ import styled from 'styled-components'
 import { useOnClickOutside } from '../utils/hooks'
 
 const Container = styled.nav`
-  padding-top: 7rem;
+  margin: 3rem auto;
+  max-width: 1450px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  width: 100%;
 `
 const Name = styled.h1`
   font-size: 3rem;

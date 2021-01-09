@@ -1,12 +1,13 @@
-import { graphql, useStaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 import { useState } from 'react'
 import { BiX } from 'react-icons/bi'
 import styled, { keyframes } from 'styled-components'
+import { useLockBodyScroll } from '../utils/hooks'
 
 const Overlay = styled.div`
   position: fixed;
   top: 0;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.98);
   height: 100%;
   width: 100%;
@@ -45,26 +46,10 @@ const ImgFade = styled(Img)`
   animation: ${FadeInAnimation} ease 0.6s;
 `
 
-const Lightbox = ({ selectedImageId, handleCloseLightbox }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      fullSize: allSanityPortraits(sort: { fields: _createdAt, order: DESC }) {
-        nodes {
-          _id
-          name
-          image {
-            asset {
-              fluid(maxWidth: 1500) {
-                ...GatsbySanityImageFluid
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
+const Lightbox = ({ lightboxImages, selectedImageId, handleCloseLightbox }) => {
+  useLockBodyScroll()
 
-  const { nodes } = data.fullSize
+  const { nodes } = lightboxImages
 
   const initialImageIndex = nodes.findIndex(
     (element) => element._id === selectedImageId

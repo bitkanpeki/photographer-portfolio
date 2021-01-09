@@ -1,4 +1,3 @@
-import { graphql, useStaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 import { useState } from 'react'
 
@@ -23,6 +22,7 @@ const Container = styled.div`
 const ImgContainer = styled.div`
   width: ${({ aspectRatio }) => 400 * aspectRatio}px;
   flex-grow: ${({ aspectRatio }) => 400 * aspectRatio};
+  //max-width: 500px;
 
   .gatsby-image-wrapper:hover:after {
     content: '';
@@ -35,26 +35,8 @@ const ImgContainer = styled.div`
   }
 `
 
-const Gallery = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      thumbnails: allSanityPortraits(
-        sort: { fields: _createdAt, order: DESC }
-      ) {
-        nodes {
-          _id
-          name
-          image {
-            asset {
-              fluid(maxWidth: 800) {
-                ...GatsbySanityImageFluid
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
+const Gallery = ({ allImages }) => {
+  const { galleryImages, lightboxImages } = allImages
 
   const [showLightbox, setShowLightbox] = useState(false)
   const [selectedImageId, setSelectedImageId] = useState(null)
@@ -72,7 +54,7 @@ const Gallery = () => {
   return (
     <>
       <Container>
-        {data.thumbnails.nodes.map((thumbnail) => (
+        {galleryImages.nodes.map((thumbnail) => (
           <ImgContainer
             key={thumbnail._id}
             aspectRatio={thumbnail.image.asset.fluid.aspectRatio}
@@ -85,6 +67,7 @@ const Gallery = () => {
 
       {showLightbox && selectedImageId !== null && (
         <Lightbox
+          lightboxImages={lightboxImages}
           selectedImageId={selectedImageId}
           handleCloseLightbox={handleCloseLightbox}
         />
