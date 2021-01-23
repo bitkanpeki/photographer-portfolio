@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Nav from './Nav'
 import Footer from './Footer'
+import Gallery from './Gallery'
 
 const Container = styled.div`
   display: flex;
@@ -14,12 +15,15 @@ const Content = styled.div`
   margin: 0 7rem;
 `
 
-const Layout = ({ children }) => (
+const LayoutPortrait = ({ children }) => (
   <Container>
     <Nav />
-    <Content>{children}</Content>
+    <Content>
+      <Gallery />
+    </Content>
+    {children}
     <Footer />
   </Container>
 )
 
-export default Layout
+export default LayoutPortrait

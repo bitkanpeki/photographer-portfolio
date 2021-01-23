@@ -1,15 +1,16 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { useOnClickOutside } from '../utils/hooks'
 
 const Container = styled.nav`
-  margin: 3rem auto;
-  max-width: 1450px;
+  //max-width: 1450px;
+  //width: 100%;
+  margin: 7rem 7rem 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 `
 const Name = styled.h1`
   font-size: 3rem;
@@ -28,7 +29,7 @@ const List = styled.ul`
   padding: 0;
   text-align: center;
   list-style: none;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 0.25rem;
   text-transform: uppercase;

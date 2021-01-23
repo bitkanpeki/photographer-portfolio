@@ -1,5 +1,14 @@
-import Global from './src/components/Global'
+import React from 'react'
+import LayoutPortrait from './src/components/LayoutPortrait'
+
+// export function wrapPageElement({ element, props }) {
+//   return <Global {...props}>{element}</Global>
+// }
 
 export function wrapPageElement({ element, props }) {
-  return <Global {...props}>{element}</Global>
+  return <LayoutPortrait {...props}>{element}</LayoutPortrait>
 }
+
+// export const onRenderBody = ({ setPostBodyComponents }) => {
+//   setPostBodyComponents([<div key="ReactPortal" id="ReactPortal" />])
+// }

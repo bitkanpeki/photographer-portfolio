@@ -23,14 +23,18 @@ export const useOnClickOutside = (refs, handler) => {
 }
 
 export const useLockBodyScroll = () => {
-  useLayoutEffect(() => {
-    // Get original body overflow
-    const originalStyle = window.getComputedStyle(document.body).overflow
+  useEffect(() => {
+    const { body } = document
+    body.style.top = `-${window.scrollY}px`
+    body.style.position = 'fixed'
+    body.style.paddingRight = '12px'
 
-    // Prevent scrolling on mount
-    document.body.style.overflow = 'hidden'
-
-    // Re-enable scrolling when component unmounts
-    return () => (document.body.style.overflow = originalStyle)
-  }, []) // Empty array ensures effect is only run on mount and unmount
+    return () => {
+      const scrollY = body.style.top
+      body.style.position = ''
+      body.style.top = ''
+      body.style.paddingRight = '0'
+      window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+  }, [])
 }

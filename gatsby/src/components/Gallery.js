@@ -1,15 +1,15 @@
+import React, { useState } from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
-import { useState } from 'react'
 
 import styled from 'styled-components'
 import { device } from '../styles/Breakpoints'
 import Lightbox from './Lightbox'
 
 const Container = styled.div`
-  margin-top: 5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2.4rem;
 
   @media ${device.small} {
     &::after {
@@ -35,11 +35,67 @@ const ImgContainer = styled.div`
   }
 `
 
-const Gallery = ({ allImages }) => {
-  const { galleryImages, lightboxImages } = allImages
+const Gallery = () => {
+  const data = useStaticQuery(
+    graphql`
+      query gallery {
+        galleryImages: allSanityPortraits(
+          sort: { fields: _createdAt, order: DESC }
+        ) {
+          nodes {
+            id
+            name
+            image {
+              asset {
+                fluid(maxWidth: 600) {
+                  ...GatsbySanityImageFluid
+                }
+              }
+            }
+          }
+        }
+        lightboxImages: allSanityPortraits(
+          sort: { fields: _createdAt, order: DESC }
+        ) {
+          nodes {
+            id
+            name
+            image {
+              asset {
+                fluid(maxWidth: 2000) {
+                  ...GatsbySanityImageFluid
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  )
 
   const [showLightbox, setShowLightbox] = useState(false)
   const [selectedImageId, setSelectedImageId] = useState(null)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(1)
+
+  const { nodes } = data.lightboxImages
+
+  const initialImageIndex = nodes.findIndex(
+    (element) => element.id === selectedImageId
+  )
+
+  const dataLength = nodes.length
+
+  const selectedImage = nodes[selectedImageIndex]
+
+  const handlePrevious = () => {
+    setSelectedImageIndex(
+      (prevIndex) => (prevIndex - 1 + dataLength) % dataLength
+    )
+  }
+
+  const handleNext = () => {
+    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % dataLength)
+  }
 
   const handleOpenLightbox = (id) => {
     setShowLightbox(true)
@@ -54,11 +110,11 @@ const Gallery = ({ allImages }) => {
   return (
     <>
       <Container>
-        {galleryImages.nodes.map((thumbnail) => (
+        {data.galleryImages.nodes.map((thumbnail) => (
           <ImgContainer
-            key={thumbnail._id}
+            key={thumbnail.id}
             aspectRatio={thumbnail.image.asset.fluid.aspectRatio}
-            onClick={() => handleOpenLightbox(thumbnail._id)}
+            onClick={() => handleOpenLightbox(thumbnail.id)}
           >
             <Img fluid={thumbnail.image.asset.fluid} alt={thumbnail.name} />
           </ImgContainer>
@@ -67,8 +123,9 @@ const Gallery = ({ allImages }) => {
 
       {showLightbox && selectedImageId !== null && (
         <Lightbox
-          lightboxImages={lightboxImages}
-          selectedImageId={selectedImageId}
+          selectedImage={selectedImage}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
           handleCloseLightbox={handleCloseLightbox}
         />
       )}
